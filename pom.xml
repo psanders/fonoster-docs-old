@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.fonoster</groupId>
-		<artifactId>fonoster</artifactId>
-		<version>1.0</version>
-	</parent>
-
+	<groupId>com.fonoster</groupId>
 	<artifactId>docs</artifactId>
+	<version>1.0</version>
 	<name>Fonoster :: Docs</name>
 	<packaging>war</packaging>
+
+	<properties>
+		<image.name>fndocs</image.name>
+	</properties>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -29,14 +29,12 @@
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<configuration>
-					<skip>${skip.integration.tests}</skip>
 					<useColor>true</useColor>
 					<images>
 						<image>
 							<alias>docs</alias>
-							<name>fndocs</name>
+							<name>${image.name}</name>
 							<build>
-								<skip>${skip.image.build}</skip>
 								<tags>
 									<tag>latest</tag>
 								</tags>
@@ -46,9 +44,6 @@
 								</assembly>
 								<dockerFile>${project.basedir}/Dockerfile</dockerFile>
 							</build>
-							<run>
-								<skip>true</skip>
-							</run>
 						</image>
 					</images>
 					<!-- Remove comment to see full logs -->
@@ -70,6 +65,25 @@
 						<goals>
 							<goal>stop</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>sh</executable>
+							<arguments>
+								<argument>-c</argument>
+								<argunment>docker run -w /app -v ${project.basedir}:/app ${image.name} bundle exec middleman build --clean</argunment>
+							</arguments>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
