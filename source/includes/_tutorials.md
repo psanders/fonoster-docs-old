@@ -17,7 +17,7 @@ voice('lisa');
 
 say('Hello, this is a presidential poll from the Georgia Statistics Center.');
 
-var keyPressed = gather(say('If you would like to be remove from our list, press 7'), {timeout: 2, numDigits: 1});
+var keyPressed = gather(say('If you would like to be remove from our list, press 7'), {timeout: 10, numDigits: 1});
 
 if (keyPressed == 7) {
     http.post('https://georgia.gov/removeFromList')

@@ -134,7 +134,7 @@ with the verb with the same text will use a cached file, therefore, a faster res
 > <h3 class="toc-ignore">Example</h3>
 
 ```javascript
-var config = {timeout: 2, numDigits: 1};
+var config = {timeout: 10, numDigits: 1};
 var key = gather(say('Choose a number from your keypad'), config);
 say('The key pressed was, ' + key);
 ```
