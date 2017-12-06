@@ -129,3 +129,4 @@ Special Thanks
 - [middleman-syntax](https://github.com/middleman/middleman-syntax)
 - [middleman-gh-pages](https://github.com/neo/middleman-gh-pages)
 - [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
+
